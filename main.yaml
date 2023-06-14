@@ -1,0 +1,16 @@
+---
+- hosts: localhost
+  gather_facts: no
+
+  tasks:
+    - name: Gather EC2 metadata facts
+      ec2_metadata_facts:
+      register: metadata_facts
+
+    - name: Set region fact
+      set_fact:
+        region: "{{ metadata_facts.ansible_facts.ansible_ec2_metadata.region }}"
+
+    - name: Display region fact
+      debug:
+        var: region
